@@ -5,14 +5,12 @@ const buttonTwitter = document.querySelector('#twitter')
 const buttonNewQuote = document.querySelector('#new-quote')
 const loader = document.querySelector('.loader')
 
-// Show Loading
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true
 }
 
-// Hide Loading
-function complete() {
+function removeLoadingSpinner() {
     if (!loader.hidden) {
         quoteContainer.hidden = false;
         loader.hidden = true
@@ -21,7 +19,7 @@ function complete() {
 
 // Get Quote from API
 async function getQuote() {
-    loading();
+    showLoadingSpinner();
     const proxyUrl = 'https://corsproxy.io/?'
     const apiUrl = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
     try {
@@ -44,7 +42,7 @@ async function getQuote() {
         quoteText.innerText = data.quoteText
 
         // Stop Loader, Show Quote
-        complete();
+        removeLoadingSpinner();
     } catch (error) {
         getQuote()
         console.log('Whoops, no quotes!', error)
